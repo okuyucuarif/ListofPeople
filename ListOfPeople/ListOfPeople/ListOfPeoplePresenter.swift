@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol IListOfPersonPresenter {
+protocol IListOfPersonPresenter {
     var view: IListOfPersonView? { get set }
     var router: IListOfPersonRouter? {get set}
     var interactor: IListOfPersonInteractor? {get set}
@@ -69,7 +69,7 @@ class ListOfPeoplePresenter:  IListOfPersonPresenter{
     func addFetchedDataToList(fetchedData: [Person]) -> Bool {
         var isAnyDataAdded = false
         for person in fetchedData {
-            if !people.contains { $0.id == person.id } {
+            if !people.contains(where: { $0.id == person.id }) {
                 isAnyDataAdded = true
                 people.append(person)
             }

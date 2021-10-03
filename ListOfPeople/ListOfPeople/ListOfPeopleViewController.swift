@@ -9,7 +9,7 @@ import UIKit
 
 typealias ListOfPersonStartPointView = IListOfPersonView & ListOfPeopleViewController
 
-protocol IListOfPersonView {
+protocol IListOfPersonView {
     var presenter: IListOfPersonPresenter? { get set }
     
     func setTableViewData(list: [Person])
