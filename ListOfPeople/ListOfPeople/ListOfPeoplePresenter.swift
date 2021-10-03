@@ -17,6 +17,7 @@ protocol IListOfPersonPresenter {
     func pulledForRefresh()
     func errorOccured()
     func setData(response: FetchResponse)
+    func notifyDidTapOkButtonOnAlertView()
 }
 
 class ListOfPeoplePresenter:  IListOfPersonPresenter{
@@ -61,7 +62,6 @@ class ListOfPeoplePresenter:  IListOfPersonPresenter{
         }else {
             view?.noMoreData()
         }
-        
     }
     
     /// Add fetched data to people array if array contains same data, donot add.
@@ -75,6 +75,12 @@ class ListOfPeoplePresenter:  IListOfPersonPresenter{
             }
         }
         return isAnyDataAdded
+    }
+    
+    func notifyDidTapOkButtonOnAlertView() {
+        if people.isEmpty {
+            view?.setNoOneViewVisible()
+        }
     }
     
     func pulledForRefresh() {

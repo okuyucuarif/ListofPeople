@@ -108,6 +108,9 @@ class ListOfPeopleViewController: UIViewController, IListOfPersonView {
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { [weak self] action in
             self?.didTapRetry()
         }))
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [weak self] action in
+            self?.presenter?.notifyDidTapOkButtonOnAlertView()
+        }))
         present(alert, animated: true)
     }
     
