@@ -123,7 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				B5851E6F2709BBC800FE623D /* Extension */,
-				B5851E672709B55000FE623D /* View */,
+				B5851E672709B55000FE623D /* Views */,
 				B5851E572709AEBE00FE623D /* ListOfPeople */,
 				B5851E532709AE8B00FE623D /* AppDelegate */,
 				B5851E522709AE7E00FE623D /* DataSource */,
@@ -181,13 +181,13 @@
 			path = ListOfPeople;
 			sourceTree = "<group>";
 		};
-		B5851E672709B55000FE623D /* View */ = {
+		B5851E672709B55000FE623D /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B5851E682709B57100FE623D /* NoOneView.swift */,
 				B5851E6B2709B58400FE623D /* ListOfPeopleTableView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B5851E6F2709BBC800FE623D /* Extension */ = {
