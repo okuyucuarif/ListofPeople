@@ -7,11 +7,9 @@
 
 import UIKit
 
-typealias ListOfPersonStartPointView = IListOfPersonView & ListOfPeopleViewController
+typealias ListOfPersonStartPointView = ListOfPersonViewProtocol & ListOfPeopleViewController
 
-protocol IListOfPersonView {
-    var presenter: IListOfPersonPresenter? { get set }
-    
+protocol ListOfPersonViewProtocol: AnyObject {
     func setTableViewData(list: [Person])
     func setNoOneViewVisible()
     func showAlert()
@@ -19,8 +17,8 @@ protocol IListOfPersonView {
     func cleanSpinners()
 }
 
-class ListOfPeopleViewController: UIViewController, IListOfPersonView {
-    var presenter: IListOfPersonPresenter?
+class ListOfPeopleViewController: UIViewController, ListOfPersonViewProtocol {
+    var presenter: ListOfPersonPresenterProtocol?
     
     lazy var tableView: ListOfPeopleTableView = {
         let tableView = ListOfPeopleTableView()

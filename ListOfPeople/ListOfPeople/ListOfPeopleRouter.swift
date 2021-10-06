@@ -7,22 +7,23 @@
 
 import Foundation
 
-protocol IListOfPersonRouter {
-    var view: ListOfPersonStartPointView? { get set }
+protocol ListOfPersonRouterProtocol {
+
 }
 
-class ListOfPeopleRouter: IListOfPersonRouter {
+class ListOfPeopleRouter: ListOfPersonRouterProtocol {
     var view: ListOfPersonStartPointView?
     
-    static let shared: IListOfPersonRouter = {
+    static let shared: ListOfPeopleRouter = {
         let listOfPeopleRouter = ListOfPeopleRouter()
         return listOfPeopleRouter
     }()
 
     private init() {
+        
         self.view = ListOfPeopleViewController()
-        var presenter: IListOfPersonPresenter = ListOfPeoplePresenter()
-        var interactor: IListOfPersonInteractor = ListOfPeopleInteractor()
+        let presenter = ListOfPeoplePresenter()
+        let interactor = ListOfPeopleInteractor()
 
         self.view?.presenter = presenter
 

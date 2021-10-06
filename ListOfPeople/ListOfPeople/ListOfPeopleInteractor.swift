@@ -7,14 +7,12 @@
 
 import Foundation
 
-protocol IListOfPersonInteractor {
-    var presenter: IListOfPersonPresenter? { get set }
-    
+protocol ListOfPersonInteractorInputProtocol {
     func fetchData(next: String?)
 }
 
-class ListOfPeopleInteractor: IListOfPersonInteractor {
-    var presenter: IListOfPersonPresenter?
+class ListOfPeopleInteractor: ListOfPersonInteractorInputProtocol {
+    var presenter: ListOfPersonInteractorOutputProtocol?
     var isAPICalling = false
     
     func fetchData(next: String?) {

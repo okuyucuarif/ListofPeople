@@ -7,25 +7,23 @@
 
 import Foundation
 
-protocol IListOfPersonPresenter {
-    var view: IListOfPersonView? { get set }
-    var router: IListOfPersonRouter? {get set}
-    var interactor: IListOfPersonInteractor? {get set}
-    
+protocol ListOfPersonPresenterProtocol {
     func notifyViewDidLoad()
     func fetchData()
     func pulledForRefresh()
-    func errorOccured()
-    func setData(response: FetchResponse)
+    
     func notifyDidTapOkButtonOnAlertView()
 }
 
-class ListOfPeoplePresenter:  IListOfPersonPresenter{
-    var view: IListOfPersonView?
-    
-    var router: IListOfPersonRouter?
-    
-    var interactor: IListOfPersonInteractor?
+protocol ListOfPersonInteractorOutputProtocol {
+    func errorOccured()
+    func setData(response: FetchResponse)
+}
+
+class ListOfPeoplePresenter: ListOfPersonPresenterProtocol {
+    weak var view: ListOfPersonViewProtocol?
+    var router: ListOfPersonRouterProtocol?
+    var interactor: ListOfPersonInteractorInputProtocol?
     
     var people = [Person]()
     var next: String? = nil
@@ -39,30 +37,7 @@ class ListOfPeoplePresenter:  IListOfPersonPresenter{
         interactor?.fetchData(next: next)
     }
 
-    func setData(response: FetchResponse) {
-        defer {
-            view?.cleanSpinners()
-            isPullToRefreshing = false
-        }
-        self.next = response.next
-       
-        if people.isEmpty && response.people.isEmpty {
-            if isPullToRefreshing {
-                // error occured when refreshing
-                errorOccured()
-            }else {
-                // initial result is empty
-                view?.setNoOneViewVisible()
-            }
-            return
-        }
-        let isAnyDataAdded = addFetchedDataToList(fetchedData: response.people)
-        if isAnyDataAdded {
-            view?.setTableViewData(list: people)
-        }else {
-            view?.noMoreData()
-        }
-    }
+    
     
     /// Add fetched data to people array if array contains same data, donot add.
     /// Return a bool value that indicates any data  be added or not to array
@@ -90,9 +65,37 @@ class ListOfPeoplePresenter:  IListOfPersonPresenter{
         fetchData()
     }
     
+    
+    
+}
+
+extension ListOfPeoplePresenter: ListOfPersonInteractorOutputProtocol {
+    func setData(response: FetchResponse) {
+        defer {
+            view?.cleanSpinners()
+            isPullToRefreshing = false
+        }
+        self.next = response.next
+       
+        if people.isEmpty && response.people.isEmpty {
+            if isPullToRefreshing {
+                // error occured when refreshing
+                errorOccured()
+            }else {
+                // initial result is empty
+                view?.setNoOneViewVisible()
+            }
+            return
+        }
+        let isAnyDataAdded = addFetchedDataToList(fetchedData: response.people)
+        if isAnyDataAdded {
+            view?.setTableViewData(list: people)
+        }else {
+            view?.noMoreData()
+        }
+    }
     func errorOccured() {
         view?.cleanSpinners()
         view?.showAlert()
     }
-    
 }
